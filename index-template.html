@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="style.css" type="text/css"/>
+    <title>HAR Embryo Images</title>
+  </head>
+  <body>
+    <div id="toc">
+      <b>HARs</b>
+      <ul>
+        {% for har in hars|sort %}
+          <li><a href="#har_{{ har }}">{{ har }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="container">
+      {% for har in hars|sort %}
+        <div class="row">
+          <div class="col1">
+            <h1>HAR {{ har }} <a class="section_link" id="har_{{ har }}">&para;</a></h1>
+            {% if hars[har]['aliases'] %}
+            <p>
+              <b>Aliases</b>&nbsp;&nbsp;&nbsp;
+              {% for alias in hars[har]['aliases'] %}
+                HAR {{ alias }}{% if not loop.last %},{% endif %}
+              {% endfor %}
+            </p>
+            {% endif %}
+            <p>
+              <b>Human&ndash;Chimp difference</b>&nbsp;&nbsp;&nbsp;
+              {{ hars[har]['species-difference'] }}
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          {% for species in hars[har]['species'] %}
+            <div class="col2">
+              <h2>{{ species }}</h2>
+              <p>
+                <b>Expression</b>&nbsp;&nbsp;&nbsp;
+                {{ hars[har]['species'][species]['expression'] }}
+              </p>
+              <p>
+                <b>HAR in genome</b>&nbsp;&nbsp;&nbsp;
+                <a href="{{ genome_url_prefixes[species] }}{{ hars[har]['species'][species]['genome-coords']|urlencode }}" target="_blank">
+                  click here
+                </a>
+              </p>
+              {% if hars[har]['species'][species]['consistent-activity-domains'] %}
+                <p>
+                  <b>Consistent activity domains</b>
+                  <blockquote>
+                  {% for domain in hars[har]['species'][species]['consistent-activity-domains'] %}
+                    {{ domain }}{% if not loop.last %},{% endif %}
+                  {% endfor %}
+                  </blockquote>
+                </p>
+              {% endif %}
+              {% if hars[har]['species'][species]['suggestive-activity-domains'] %}
+                <p>
+                  <b>Suggestive activity domains</b>
+                  <blockquote>
+                  {% for domain in hars[har]['species'][species]['suggestive-activity-domains'] %}
+                    {{ domain }}{% if not loop.last %},{% endif %}
+                  {% endfor %}
+                  </blockquote>
+                </p>
+              {% endif %}
+              {% for img_num in hars[har]['species'][species]['imgs']|sort %}
+                  <a href="./imgs/{{ har }}/{{ species }}/{{ img_num }}.tif" target="_blank">
+                    <img src="./imgs/{{ har }}/{{ species }}/{{ img_num }}-small.png">
+                  </a>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </div>
+        <div class="space"></div>
+      {% endfor %}
+    </div>
+  </body>
+</html>
