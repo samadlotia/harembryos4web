@@ -7,6 +7,7 @@ import shutil
 
 HAR_ID_RE = re.compile(r'(?:2x)?HAR\.?(\d+)')
 
+ACTIVITY_DOMAIN_RE = re.compile(r'(.+)\s+\((\d+)\)')
 def parse_activity_domains(s):
   if not s or s == 'none':
     return []
@@ -14,8 +15,11 @@ def parse_activity_domains(s):
   domains = []
   for piece in pieces:
     piece = piece.strip()
-    if not piece: continue
-    domains.append(piece)
+    match = ACTIVITY_DOMAIN_RE.match(piece)
+    if not match: continue
+    name = match.group(1)
+    num_imgs = int(match.group(2))
+    domains.append((name, num_imgs))
   return domains
 
 def parse_har_id(s):

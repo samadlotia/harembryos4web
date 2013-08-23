@@ -65,7 +65,7 @@
                   <b>Consistent activity domains</b>
                   <blockquote>
                   {% for domain in hars[har]['species'][species]['consistent-activity-domains'] %}
-                    {{ domain }}{% if not loop.last %},{% endif %}
+                    <i class="tooltip" title="Number of embryo images showing this activity: {{ domain[1] }}">{{ domain[0] }}</i>{% if not loop.last %},{% endif %}
                   {% endfor %}
                   </blockquote>
                 </p>
@@ -75,7 +75,7 @@
                   <b>Suggestive activity domains</b>
                   <blockquote>
                   {% for domain in hars[har]['species'][species]['suggestive-activity-domains'] %}
-                    {{ domain }}{% if not loop.last %},{% endif %}
+                  <i class="tooltip" title="Number of embryo images showing this activity: {{ domain[1] }}">{{ domain[0] }}</i>{% if not loop.last %},{% endif %}
                   {% endfor %}
                   </blockquote>
                 </p>
