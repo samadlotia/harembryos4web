@@ -11,7 +11,7 @@
       <b>HARs</b>
       <ul>
         {% for har in hars|sort %}
-          <li><a href="#har_{{ har }}">{{ har }}</a></li>
+          <li><a href="#har_{{ har }}">{{ hars[har]['name'] }}</a></li>
         {% endfor %}
       </ul>
     </div>
@@ -19,7 +19,7 @@
       {% for har in hars|sort %}
         <div class="row">
           <div class="col1">
-            <h1>HAR {{ har }} <a class="section_link" id="har_{{ har }}">&para;</a></h1>
+            <h1>{{ hars[har]['name'] }} <a class="section_link" id="har_{{ har }}">&para;</a></h1>
             {% if hars[har]['aliases'] %}
             <p>
               <b>Aliases</b>&nbsp;&nbsp;&nbsp;
@@ -69,8 +69,8 @@
                 </p>
               {% endif %}
               {% for img_num in hars[har]['species'][species]['imgs']|sort %}
-                  <a href="./imgs/{{ har }}/{{ species }}/{{ img_num }}.tif" target="_blank">
-                    <img src="./imgs/{{ har }}/{{ species }}/{{ img_num }}-small.png">
+                  <a href="../imgs/{{ har }}/{{ species }}/{{ img_num }}.tif" target="_blank">
+                    <img src="../imgs/{{ har }}/{{ species }}/{{ img_num }}-small.png">
                   </a>
               {% endfor %}
             </div>

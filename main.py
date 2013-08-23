@@ -45,6 +45,7 @@ def parse_har_csv(csv_path):
       continue
     if not har_id in hars:
       hars[har_id] = {
+        'name'               : row['ID'],
         'species'            : {},
         'aliases'            : parse_aliases(row['Aliases']),
         'species-difference' : row['Human-Chimp Difference'],
@@ -164,7 +165,7 @@ def main(args):
   output_dir = make_output_dir_name()
   os.mkdir(output_dir)
   setup_web_files(hars, output_dir)
-  convert_imgs(hars, output_dir)
+  #convert_imgs(hars, output_dir)
 
 def ensure_pil():
   try:
