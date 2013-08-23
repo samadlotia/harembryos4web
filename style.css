@@ -23,9 +23,7 @@ a:hover {
 }
 
 img {
-  border: none;
-  vertical-align: top;
-  padding: 0 0 0.4em 0.1em;
+  padding-bottom: 1em;
 }
 
 #toc {
@@ -38,6 +36,11 @@ img {
   border-radius: 0.6em;
   padding-left: 1.5em;
   padding-right: 1.5em;
+}
+
+#toc h4 {
+  margin: 0 0 0.5em 0;
+  text-align: right;
 }
 
 #toc ul {

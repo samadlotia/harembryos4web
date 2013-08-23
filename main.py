@@ -95,7 +95,7 @@ def make_output_dir_name():
     dir_name = OUTPUT_DIR_PREFIX + ' ' + str(n)
   return dir_name
 
-MAX_THUMBNAIL_SIZE = 140
+MAX_THUMBNAIL_SIZE = 280
 def convert_img(original_path, target_prefix):
   import Image # Python caches import statements
   img = Image.open(original_path)
@@ -165,7 +165,7 @@ def main(args):
   output_dir = make_output_dir_name()
   os.mkdir(output_dir)
   setup_web_files(hars, output_dir)
-  #convert_imgs(hars, output_dir)
+  convert_imgs(hars, output_dir)
 
 def ensure_pil():
   try:
