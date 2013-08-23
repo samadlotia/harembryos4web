@@ -29,9 +29,9 @@ img {
 #toc {
   position: fixed;
   left: 1em;
-  top: 3em;
+  top: 1em;
   font-size: 0.8em;
-  background-color: #ddd;
+  background-color: #E2E2E2;
   padding: 1em;
   border-radius: 0.6em;
   padding-left: 1.5em;

@@ -3,7 +3,6 @@ import os
 from os.path import join as filejoin, isdir, isfile
 import sys
 import csv
-import argparse
 import shutil
 
 HAR_ID_RE = re.compile(r'(?:2x)?HAR\.?(\d+)')
@@ -55,6 +54,7 @@ def parse_har_csv(csv_path):
       'consistent-activity-domains' : parse_activity_domains(row['Consistent Activity Domains (# pos)']),
       'suggestive-activity-domains' : parse_activity_domains(row['Suggestive Activity Domains (# pos)']),
       'expression'                  : row['Expression'],
+      'stage'                       : row['Stage'],
       'imgs'                        : {},
     }
   input_file.close()
@@ -140,6 +140,7 @@ def print_summary(hars):
         print '  %2d: %s' % (img, img_dict[img])
 
 def parse_args():
+  import argparse
   parser = argparse.ArgumentParser()
   parser.add_argument('har_csv', help='Path to CSV file containing HAR IDs')
   parser.add_argument('img_dir', help='Path to top-level directory containing embryo images')
@@ -165,7 +166,7 @@ def main(args):
   output_dir = make_output_dir_name()
   os.mkdir(output_dir)
   setup_web_files(hars, output_dir)
-  convert_imgs(hars, output_dir)
+  #convert_imgs(hars, output_dir)
 
 def ensure_pil():
   try:
@@ -183,6 +184,15 @@ def ensure_jinja():
     print 'To install it with pip: pip install jinja2'
     sys.exit()
 
+def ensure_argparse():
+  try:
+    import argparse
+  except:
+    print 'Could not import the argparse library.'
+    print 'This script requires Python 2.7 or greater'
+    sys.exit()
+
+ensure_argparse()
 ensure_pil()
 ensure_jinja()
 main(parse_args())
