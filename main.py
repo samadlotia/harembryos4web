@@ -25,6 +25,36 @@ def parse_har_id(s):
   else:
     return int(match.group(1))
 
+GENE_AND_LOCATION_RE = re.compile(r'^(\S+)\s*\((\-?\d+)\)$')
+def parse_genes(s):
+  if not s or s == 'None': return None
+  pieces = s.split(',')
+  genes = []
+  for piece in pieces:
+    piece = piece.strip()
+    match = GENE_AND_LOCATION_RE.match(piece)
+    if not match:
+      continue
+    gene = match.group(1)
+    location = int(match.group(2))
+    genes.append((gene, location))
+  return genes
+
+def parse_bracketed_genes(s, har_name):
+  genes = parse_genes(s)
+  if not genes: return None
+  upstreams = filter(lambda g: g[1] < 0, genes)
+  if not upstreams:
+    print 'Warning: no upstream genes found for', har_name
+    return None
+  downstreams = filter(lambda g: g[1] > 0, genes)
+  if not downstreams:
+    print 'Warning: no downstream genes found for', har_name
+    return None
+  nearest_upstream = max(upstreams, key = lambda g: g[1])
+  nearest_downstream = min(downstreams, key = lambda g: g[1])
+  return [nearest_upstream[0], nearest_downstream[0]]
+
 def parse_aliases(s):
   if not s:
     return []
@@ -49,6 +79,9 @@ def parse_har_csv(csv_path):
         'aliases'            : parse_aliases(row['Aliases']),
         'species-difference' : row['Human-Chimp Difference'],
       }
+    if not hars[har_id].get('bracketed-genes'):
+      hars[har_id]['bracketed-genes'] = parse_bracketed_genes(row['Genes within 1 Mb (distance to TSS)'], row['ID'])
+
     hars[har_id]['species'][row['Species'].lower()] = {
       'genome-coords'               : row['Coordinates (hg19 or panTro4)'],
       'consistent-activity-domains' : parse_activity_domains(row['Consistent Activity Domains (# pos)']),

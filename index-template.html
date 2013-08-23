@@ -28,6 +28,14 @@
               {% endfor %}
             </p>
             {% endif %}
+            {% if hars[har]['bracketed-genes'] %}
+            <p>
+              <b>Bracketed genes</b>&nbsp;&nbsp;&nbsp;
+              {% for gene in hars[har]['bracketed-genes'] %}
+                {{ gene }}{% if not loop.last %},{% endif %}
+              {% endfor %}
+            </p>
+            {% endif %}
             <p>
               <b>Human&ndash;Chimp difference</b>&nbsp;&nbsp;&nbsp;
               {{ hars[har]['species-difference'] }}
