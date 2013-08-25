@@ -33,7 +33,7 @@
             <p>
               <b>Bracketed genes</b>&nbsp;&nbsp;&nbsp;
               {% for gene in hars[har]['bracketed-genes'] %}
-                <a class="link" target="_blank" href="http://www.google.com/search?q={{ gene }}">{{ gene }}</a>{% if not loop.last %},{% endif %}
+                <a class="link" target="_blank" href="http://www.google.com/search?q={{ gene|urlencode }}+gene">{{ gene }}</a>{% if not loop.last %},{% endif %}
               {% endfor %}
             </p>
             {% endif %}

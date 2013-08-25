@@ -135,7 +135,11 @@ def make_output_dir_name():
 MAX_THUMBNAIL_SIZE = 280
 def convert_img(original_path, target_prefix):
   import Image # Python caches import statements
-  img = Image.open(original_path)
+  try:
+    img = Image.open(original_path)
+  except Exception, e:
+    print "Error: could not open image:\n  %s\nbecause: %s" % (original_path, str(e))
+    return
   img.save(target_prefix + '.tif', format = 'TIFF')
   img.thumbnail((MAX_THUMBNAIL_SIZE, MAX_THUMBNAIL_SIZE), Image.ANTIALIAS)
   img.save(target_prefix + '-small.png', format = 'PNG')
@@ -203,7 +207,7 @@ def main(args):
   output_dir = make_output_dir_name()
   os.mkdir(output_dir)
   setup_web_files(hars, output_dir)
-  #convert_imgs(hars, output_dir)
+  convert_imgs(hars, output_dir)
 
 def ensure_pil():
   try:
