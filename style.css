@@ -13,13 +13,13 @@ h2 {
   height: 7em;
 }
 
-a {
+a.link {
   color: #444;
   text-decoration: none;
   border-bottom: dotted 1px;
 }
 
-a:hover {
+a.link:hover {
   border-bottom: solid 1px;
 }
 
@@ -27,35 +27,43 @@ img {
   padding-bottom: 0.7em;
 }
 
-    .tooltip{
-        display: inline;
-        position: relative;
-    }
-    
-    .tooltip:hover:after{
-        background: #333;
-        background: rgba(0,0,0,.8);
-        border-radius: 5px;
-        bottom: 26px;
-        color: #fff;
-        content: attr(title);
-        left: 20%;
-        padding: 5px 15px;
-        position: absolute;
-        z-index: 98;
-        width: 220px;
-    }
-    
-    .tooltip:hover:before{
-        border: solid;
-        border-color: #333 transparent;
-        border-width: 6px 6px 0 6px;
-        bottom: 20px;
-        content: "";
-        left: 50%;
-        position: absolute;
-        z-index: 99;
-    }
+.domains > ul {
+  list-style-type: none;
+}
+
+.help {
+  width: 20px;
+  height: 20px;
+  background: #EBEACA;
+  border-radius: 50%;
+  content: "i";
+  font-family: serif;
+  text-align: center;
+  color: black;
+  font-size: 1.0em;
+  visibility: hidden;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.domains:hover > .help {
+  visibility: visible;
+}
+
+.help:hover {
+  cursor: pointer;
+}
+
+#help-content {
+  background: #444;
+  color: #ddd;
+  font-size: 0.7em;
+  width: 20em;
+  position: relative;
+  padding: 0.7em;
+  border-radius: 0.5em;
+  display: none;
+}
 
 #toc {
   position: fixed;
@@ -86,6 +94,8 @@ img {
 }
 
 #toc a {
+  color: #444;
+  text-decoration: none;
   border-bottom: none;
 }
 

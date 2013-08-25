@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="style.css" type="text/css"/>
     <title>HAR Embryo Images</title>
+    <script src='http://code.jquery.com/jquery-latest.min.js' type='text/javascript'></script>
   </head>
   <body>
     <div id="toc">
@@ -32,7 +33,7 @@
             <p>
               <b>Bracketed genes</b>&nbsp;&nbsp;&nbsp;
               {% for gene in hars[har]['bracketed-genes'] %}
-                {{ gene }}{% if not loop.last %},{% endif %}
+                <a class="link" target="_blank" href="http://www.google.com/search?q={{ gene }}">{{ gene }}</a>{% if not loop.last %},{% endif %}
               {% endfor %}
             </p>
             {% endif %}
@@ -56,29 +57,29 @@
               </p>
               <p>
                 <b>HAR in genome</b>&nbsp;&nbsp;&nbsp;
-                <a href="{{ genome_url_prefixes[species] }}{{ hars[har]['species'][species]['genome-coords']|urlencode }}" target="_blank">
+                <a href="{{ genome_url_prefixes[species] }}{{ hars[har]['species'][species]['genome-coords']|urlencode }}" target="_blank" class="link">
                   click here
                 </a>
               </p>
               {% if hars[har]['species'][species]['consistent-activity-domains'] %}
-                <p>
-                  <b>Consistent activity domains</b>
-                  <blockquote>
+                <div class="domains">
+                  <b>Consistent activity domains</b> <span class="help" content="The activity domains are listed below with the number of embryo images exhibiting the activity domain.">?</span>
+                  <ul>
                   {% for domain in hars[har]['species'][species]['consistent-activity-domains'] %}
-                    <i class="tooltip" title="Number of embryo images showing this activity: {{ domain[1] }}">{{ domain[0] }}</i>{% if not loop.last %},{% endif %}
+                    <li>{{ domain[0] }} ({{ domain[1] }})</li>
                   {% endfor %}
-                  </blockquote>
-                </p>
+                  </ul>
+                </div>
               {% endif %}
               {% if hars[har]['species'][species]['suggestive-activity-domains'] %}
-                <p>
-                  <b>Suggestive activity domains</b>
-                  <blockquote>
-                  {% for domain in hars[har]['species'][species]['suggestive-activity-domains'] %}
-                  <i class="tooltip" title="Number of embryo images showing this activity: {{ domain[1] }}">{{ domain[0] }}</i>{% if not loop.last %},{% endif %}
-                  {% endfor %}
-                  </blockquote>
-                </p>
+                <div class="domains">
+                  <b>Suggestive activity domains</b> <span class="help" content="The activity domains are listed below with the number of embryo images exhibiting the activity domain.">?</span>
+                  <ul>
+                    {% for domain in hars[har]['species'][species]['suggestive-activity-domains'] %}
+                      <li>{{ domain[0] }} ({{ domain[1] }})</li>
+                    {% endfor %}
+                  </ul>
+                </div>
               {% endif %}
               {% for img_num in hars[har]['species'][species]['imgs']|sort %}
                   <a href="../imgs/{{ har }}/{{ species }}/{{ img_num }}.tif" target="_blank">
@@ -91,5 +92,19 @@
         <div class="space"></div>
       {% endfor %}
     </div>
+    <div id="help-content"></div>
+    <script type="text/javascript">
+      var help_content = $('#help-content');
+      $('.help').mouseenter(function() {
+          help_content.show();
+          help_content.text($(this).attr('content'));
+          var pos = $(this).offset();
+          pos.top -= 70;
+          help_content.offset(pos);
+      });
+      $('.help').mouseleave(function() {
+          help_content.hide();
+      });
+    </script>
   </body>
 </html>
