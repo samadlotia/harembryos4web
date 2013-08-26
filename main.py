@@ -132,17 +132,23 @@ def make_output_dir_name():
     dir_name = OUTPUT_DIR_PREFIX + ' ' + str(n)
   return dir_name
 
-MAX_THUMBNAIL_SIZE = 280
+THUMBNAIL_WIDTH = 280
+def calc_thumbnail_size(img_size):
+  w, h = img_size
+  tw = THUMBNAIL_WIDTH 
+  th = tw * h / w
+  return (tw, th)
+
 def convert_img(original_path, target_prefix):
   import Image # Python caches import statements
   try:
     img = Image.open(original_path)
   except Exception, e:
-    print "Error: could not open image:\n  %s\nbecause: %s" % (original_path, str(e))
+    print "Error: could not open image because: %s\n  %s" % (str(e), original_path)
     return
-  img.save(target_prefix + '.tif', format = 'TIFF')
-  img.thumbnail((MAX_THUMBNAIL_SIZE, MAX_THUMBNAIL_SIZE), Image.ANTIALIAS)
-  img.save(target_prefix + '-small.png', format = 'PNG')
+  img.save(target_prefix + '.tif', format = 'TIFF') # copy full tiff image
+  thumbnail_img = img.resize(calc_thumbnail_size(img.size), Image.ANTIALIAS)
+  thumbnail_img.save(target_prefix + '-small.png', format = 'PNG')
 
 def convert_imgs(hars, output_dir):
   img_dir = filejoin(output_dir, 'imgs')

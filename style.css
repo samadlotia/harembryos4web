@@ -34,12 +34,12 @@ img {
 .help {
   width: 20px;
   height: 20px;
-  background: #EBEACA;
+  background: #A3A3A3;
   border-radius: 50%;
   content: "i";
   font-family: serif;
   text-align: center;
-  color: black;
+  color: white;
   font-size: 1.0em;
   visibility: hidden;
   display: inline-block;
