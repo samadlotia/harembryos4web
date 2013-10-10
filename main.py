@@ -67,7 +67,7 @@ def parse_aliases(s):
 
 def parse_har_csv(csv_path):
   hars = {}
-  input_file = open(csv_path, 'r')
+  input_file = open(csv_path, 'rU')
   input = csv.DictReader(input_file)
   for row in input:
     if not row['ID']:
